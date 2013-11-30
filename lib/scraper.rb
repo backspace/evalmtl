@@ -26,7 +26,7 @@ class EvalWebAgent
     rescue Exception => e
       tries += 1
       # Check for body of page from Net::HTTPInternalServerError
-      if (e.page && e.page.body.include?("Requested operation requires a current record"))
+      if (e.is_a?(Net::HTTPInternalServerError) && e.page && e.page.body.include?("Requested operation requires a current record"))
         puts "Missing from remote database!"
       else
         puts "RETRY #{tries} " + e.to_s
