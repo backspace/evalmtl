@@ -124,18 +124,35 @@ class EvalWebScraper
       search_results = search_street(term)
       search_results.css('select#select1 option').each do |street_option|
         street_id = street_option.attribute('value').value
+        
+        puts "On street_id #{street_id}"
+        
         # If we haven't reached start_street_id, skip.
         unless start_street_id.nil?
           start_street_id = nil if street_id == start_street_id
+          puts " ... skipping"
           next unless start_street_id.nil?
         end
         write_state(term, street_id)
         street_name = street_option.content.gsub(/\s+/, " ")
+          
+        puts "Getting page for street #{street_name}"
+        
         street_page = get_street_page(street_id, street_name)
-        street_page.css("option").each do |option|
+        street_page.css("option").each_with_index do |option,index|
+          value_attribute = option.attribute('value')
+
+          if value_attribute.nil?
+            puts "Option #{index} (#{option.content.strip}) has no value! Skipping"
+            next
+          end
+
           address_id = option.attribute('value').value
           address_name = option.content.strip
+          
           begin
+            puts "Getting address page for #{address_name} ID: #{address_id}"
+            
             get_address_page(address_id, address_name)
           rescue
             puts "[#{term}] ERROR address: #{address_id} (#{address_name}) " + $!.to_s
