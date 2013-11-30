@@ -53,7 +53,7 @@ class EvalWebAgent
   end
   def get_evaluation(id_uef)
     perform_request do
-      @agent.get("CompteFoncier.ASP?id_uef=" + id_uef)
+      @agent.get("roleact_arron_min.asp?ue_id=" + id_uef)
     end
   end
 end
