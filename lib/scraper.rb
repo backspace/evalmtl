@@ -114,7 +114,7 @@ class EvalWebScraper
       start_term ||= previous_term
       start_street_id ||= previous_street_id
     end
-    terms = [('aa'..'zz'),(0..9)].map{|r|r.map{|v|v}}.flatten
+    terms = [('aa'..'zz'),('0'..'9')].map{|r|r.map{|v|v}}.flatten
     terms = terms.slice(terms.index(start_term), terms.length) unless (start_term.nil? || terms.index(start_term).nil?)
     terms.each do |term|
       puts "Search term: #{term}"
