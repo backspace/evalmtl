@@ -122,7 +122,7 @@ class EvalWebScraper
       # The session can expire, so do not cache queries in hope of avoiding that.
       streets_body = @cache.get('street_search', term)
       search_results = search_street(term)
-      search_results.css('/html/body/div/div/div/p[6]/select/option').each do |street_option|
+      search_results.css('select#select1 option').each do |street_option|
         street_id = street_option.attribute('value').value
         # If we haven't reached start_street_id, skip.
         unless start_street_id.nil?
