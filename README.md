@@ -1,3 +1,28 @@
+# Fork note
+
+I forked this because:
+
+* it wasn’t working for the 2014 property assessments
+* I was getting segfaults using DBM, maybe because I was running on MacOS?
+* I needed only a subset of properties and a subset of fields from each property
+
+I changed some of the page caching to use the filesystem and added a simple sqlite generator.
+
+## Usage
+
+Assuming you have Ruby 1.9.3 and Bundler etc etc
+
+    bundle install
+    bundle exec ruby scrape-evalweb.rb
+    
+This process takes a long time as the script is systematically archiving every property assessment page. After it’s complete you can export a limited subset of the data to `export.db`:
+
+    bundle exec ruby export-evalweb.rb
+    
+Below is the existing documentation. Some of it no longer applies, but I see the project creator has a 2014 assessment fork which I didn’t realise until I was writing this!
+
+# Original documentation
+
 Scraper pour le rôle d'évaluation foncière de la Ville de Montréal: http://evalweb.ville.montreal.qc.ca/
 
 For 2012, this represents $214,989,968,755.00 (215 *billion* dollars).
