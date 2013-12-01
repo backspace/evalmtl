@@ -6,7 +6,15 @@ I forked this because:
 * I was getting segfaults using DBM, maybe because I was running on MacOS?
 * I needed only a subset of properties and a subset of fields from each property
 
-I changed some of the page caching to use the filesystem and added a simple sqlite generator.
+My changes:
+
+* added some diagnostic logging
+* used Bundler for Ruby dependency management
+* amended the evalweb caching to use the filesystem for `street` and `address`
+* added a simple sqlite generator using DataMapper
+* tweaked for parsing of 2014 assessment data
+
+I see the project creator has a 2014 assessment fork which I didn’t realise until I was writing this!
 
 ## Usage
 
@@ -19,7 +27,24 @@ This process takes a long time as the script is systematically archiving every p
 
     bundle exec ruby export-evalweb.rb
     
-Below is the existing documentation. Some of it no longer applies, but I see the project creator has a 2014 assessment fork which I didn’t realise until I was writing this!
+## Querying
+
+Maybe I’ll add a web interface, but for now you can query the database using SQL directly, or using a minimalist DataMapper interface. Start off in IRB:
+
+    irb
+    require './lib/query'
+   
+Say we want to find the properties owner by notorious capitalist Peter Sergakis.
+
+    Owner.all.select{|o| o.name.include? "SERGA"}
+   
+My database contained two Owner records. I can list the units owned by an owner like this:
+
+    Owner.get(3677).units
+    
+## Fork note over
+    
+Below is the existing documentation. Some of it no longer applies.
 
 # Original documentation
 
