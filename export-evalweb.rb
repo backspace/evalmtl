@@ -1,8 +1,10 @@
 #!/usr/bin/ruby
 # encoding: UTF-8
-# Ubuntu: sudo apt-get install rubygem libxslt1-dev && sudo gem install mechanize
+
 require 'rubygems'
-require 'mechanize'
+require 'bundler/setup'
+
+Bundler.require(:default)
 
 cached = Dir.glob 'cache/address/*'
 columns = ['address_id', 'address', 'usage', 'owners', 'value', 'previous_value']
