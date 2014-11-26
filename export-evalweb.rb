@@ -25,7 +25,7 @@ cached.each_with_index do |filename, index|
   usage = page.search("//tr[td/font[contains(., 'Utilisation prédominante :')]]/td[2]//font").text.strip
 
   value = page.search("//tr[td/font[contains(., 'immeuble :')]]/td[2]//font").text.strip.gsub(" ", "").to_i
-  previous_value = page.search("//tr[td/font[contains(., 'immeuble au')]]/td[2]//font").text.strip.gsub(" ", "").to_i
+  previous_value = page.search("//tr[td/font[contains(., 'immeuble au')]]/td[5]//font").text.strip.gsub(" ", "").to_i
 
   owners = page.search("//tr[td/font[contains(., 'Nom :')]]/td[2]//font").map(&:text)
 
