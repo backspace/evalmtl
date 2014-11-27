@@ -11,7 +11,7 @@ require './lib/export'
 DataMapper.auto_migrate!
 
 cached = Dir.glob 'cache/address/*'
-columns = ['address_id', 'address', 'usage', 'owners', 'value', 'previous_value']
+columns = ['address_id', 'address', 'usage', 'owners', 'value', 'previous_value', 'land_value']
 
 File.open("evaluations.tsv", 'w:UTF-8') do |csv|
   csv.write(columns.join("\t"))
@@ -31,6 +31,8 @@ File.open("evaluations.tsv", 'w:UTF-8') do |csv|
     value = page.search("//tr[td/font[contains(., 'immeuble :')]]/td[2]//font").text.strip.gsub(" ", "").to_i
     previous_value = page.search("//tr[td/font[contains(., 'immeuble au')]]/td[5]//font").text.strip.gsub(" ", "").to_i
 
+    land_value = page.search("//tr[td/font[contains(., 'immeuble au')]]/td[2]//font").text.strip.gsub(" ", "").to_i
+
     owners = page.search("//tr[td/font[contains(., 'Nom :')]]/td[2]//font").map(&:text)
 
     unit = Unit.create(
@@ -43,7 +45,7 @@ File.open("evaluations.tsv", 'w:UTF-8') do |csv|
     )
 
 
-    data = [address_id, address, usage, owners, value, previous_value]
+    data = [address_id, address, usage, owners, value, previous_value, land_value]
 
     csv.write(data.join("\t"))
     csv.write("\n")
